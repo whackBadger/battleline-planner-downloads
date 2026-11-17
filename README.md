@@ -1,4 +1,4 @@
-# Battle Line Planner for Android
+# Battle Line Planner tester downloads
 
 Build army lists, manage your collection and keep game information close at hand.
 
@@ -24,10 +24,10 @@ The download link above stays the same as new versions are published. If your ex
 
 ## Update reference data
 
-**Settings → Update from BSData** refreshes the supported 11th-edition catalog independently of app updates. Saved army points remain as recorded; some rules and reference cards still require app updates.
+Use **Settings → Update Game Data** in Android 0.1.24-alpha or Windows 0.6.37 and later to refresh squad sizes, points and paid wargear. The first download uses Games Workshop’s official Field Manual. Later checks pick up verified changes. In Army Builder, open a saved list and choose **Check Points** to review the effect on your total before applying it.
 
 ## Your data
 
 This download starts with an empty collection and army library. It contains no personal army lists, inventory or photos. Your own saved data stays on your device. Use **Settings → Export backup** to keep a copy or move to another phone.
 
-This repository contains downloads and release information only.
+This repository provides tester releases and the game data update channel.
