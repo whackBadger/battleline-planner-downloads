@@ -4,6 +4,10 @@ Build army lists, manage your collection and keep game information close at hand
 
 **[Download the latest Android test app](https://github.com/whackBadger/battleline-planner-downloads/releases/latest/download/Battleline-Planner.apk)**
 
+**[Download the Windows 0.6.37 tester ZIP](https://github.com/whackBadger/battleline-planner-downloads/releases/download/windows-v0.6.37/Battleline-Planner-Windows-0.6.37.zip)**
+
+Extract the complete ZIP and open Battleline Planner.exe.
+
 [Version details and release notes](https://github.com/whackBadger/battleline-planner-downloads/releases/latest)
 
 ## Install on your phone
