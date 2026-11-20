@@ -1,0 +1,60 @@
+name: Check Battle Line Planner game data
+on:
+  schedule:
+    - cron: '0 7 * * 1,4'
+      timezone: 'America/Denver'
+  workflow_dispatch:
+    inputs:
+      accept_large_removals:
+        description: Accept unusually large unit removals verified against the official source
+        default: false
+        required: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: public-field-manual-feed
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: main
+      - name: Test importer and feed
+        run: python3 -m unittest game_data_channel.test_build_feed
+      - name: Check every faction in the Field Manual
+        env:
+          ACCEPT_REMOVALS: ${{ inputs.accept_large_removals }}
+        run: |
+          options=()
+          if [[ "$ACCEPT_REMOVALS" == 'true' ]]; then
+            options+=(--accept-large-removals)
+          fi
+          for attempt in 1 2 3; do
+            if python3 -m game_data_channel.build_feed "${options[@]}"; then
+              break
+            fi
+            if [[ "$attempt" == 3 ]]; then
+              exit 1
+            fi
+            sleep 20
+          done
+      - name: Publish the checked data
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- game-data/manifest.json game-data/fingerprints/
+          if [[ -d game-data/patches ]]; then
+            git add -- game-data/patches/
+          fi
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update checked Field Manual game data'
+            git push origin HEAD:main
+          fi
